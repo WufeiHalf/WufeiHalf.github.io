@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>ANTD的选择框下拉绑定和查询问题</title>
+      <link href="/2022/04/17/%E5%85%B3%E4%BA%8Eantd%E4%B8%AD%E7%9A%84%E9%80%89%E6%8B%A9%E6%A1%86%E4%B8%8B%E6%8B%89%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD%E4%B8%8D%E8%83%BD%E6%88%90%E5%8A%9F%E5%AE%9E%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+      <url>/2022/04/17/%E5%85%B3%E4%BA%8Eantd%E4%B8%AD%E7%9A%84%E9%80%89%E6%8B%A9%E6%A1%86%E4%B8%8B%E6%8B%89%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD%E4%B8%8D%E8%83%BD%E6%88%90%E5%8A%9F%E5%AE%9E%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+      
+        <content type="html"><![CDATA[<hr><h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p><code>在使用a-select的时候发现下拉框的内容在绑定的v-model是item.id时使用搜索框自带的show-search的搜索功能会导致搜索出来的字段是id，而不是根据a-selection里的item.name字段正常显示：</code></p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a-select</span></span></span><br><span class="line"><span class="tag"><span class="attr">placeholder</span>=<span class="string">&quot;请选择&quot;</span></span></span><br><span class="line"><span class="tag">@<span class="attr">change</span>=<span class="string">&quot;Onchange&quot;</span></span></span><br><span class="line"><span class="tag"><span class="attr">show-search</span></span></span><br><span class="line"><span class="tag"><span class="attr">v-decorator</span>=<span class="string">&quot;[&#x27;State&#x27;]&quot;</span></span></span><br><span class="line"><span class="tag">&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a-selection</span></span></span><br><span class="line"><span class="tag"><span class="attr">v-for</span>=<span class="string">&quot;(item,index) in List&quot;</span></span></span><br><span class="line"><span class="tag"><span class="attr">v-model</span>=<span class="string">&quot;item.id&quot;</span></span></span><br><span class="line"><span class="tag">&gt;</span></span><br><span class="line">&#123;item.name&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">a-selection</span>&gt;</span></span><br></pre></td></tr></table></figure><hr><h1 id="解决方案："><a href="#解决方案：" class="headerlink" title="解决方案："></a>解决方案：</h1><blockquote><p>使用：filter-option配置：</p></blockquote><p>在select里添加filter-option字段，并且在script文件里做出如下方法声明</p><p>Html</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a-select</span></span></span><br><span class="line"><span class="tag"><span class="attr">:filterOption</span>=<span class="string">&quot;filterOption&quot;</span></span></span><br><span class="line"><span class="tag"><span class="attr">placeholder</span>=<span class="string">&quot;请选择&quot;</span></span></span><br><span class="line"><span class="tag">@<span class="attr">change</span>=<span class="string">&quot;Onchange&quot;</span></span></span><br><span class="line"><span class="tag"><span class="attr">show-search</span></span></span><br><span class="line"><span class="tag"><span class="attr">v-decorator</span>=<span class="string">&quot;[&#x27;State&#x27;]&quot;</span></span></span><br><span class="line"><span class="tag">&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a-selection</span></span></span><br><span class="line"><span class="tag"><span class="attr">v-for</span>=<span class="string">&quot;(item,index) in List&quot;</span></span></span><br><span class="line"><span class="tag"><span class="attr">v-model</span>=<span class="string">&quot;item.id&quot;</span></span></span><br><span class="line"><span class="tag">&gt;</span></span><br><span class="line">&#123;item.name&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">a-selection</span>&gt;</span></span><br></pre></td></tr></table></figure><p>JS</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">methods</span>: &#123;</span><br><span class="line">    <span class="comment">// 将输入的内容与显示的内容进行匹配</span></span><br><span class="line">    filterOption (value, option) &#123;</span><br><span class="line">      <span class="keyword">return</span> option.<span class="property">componentOptions</span>.<span class="property">children</span>[<span class="number">0</span>].<span class="property">text</span>.<span class="title function_">indexOf</span>(value) &gt;= <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure><p>成功解决</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 前端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 前端 </tag>
+            
+            <tag> antdv </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+</search>
