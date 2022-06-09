@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>ISS-05&amp;&amp;06操作系统安全机制</title>
+      <link href="/2022/06/09/ISS%2005&amp;&amp;06%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6/"/>
+      <url>/2022/06/09/ISS%2005&amp;&amp;06%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6/</url>
+      
+        <content type="html"><![CDATA[<hr><span id="more"></span><h2 id="用户划分的三分法与文件权限"><a href="#用户划分的三分法与文件权限" class="headerlink" title="用户划分的三分法与文件权限"></a>用户划分的三分法与文件权限</h2><p>属主：文件的拥有者。 属组：属主的首选用户组。 其余：除属主和属组之外的用户全体<br>属主域中只能有属主一个用户，其他两个的用户域都可以有多个用户。<br>例题：设在某UNIX操作系统中，部分用户组的配置信息如下：<br>    grp1:x:300:usr1,usr2,usr3,usr4<br>    grp2:x:301:usr5,usr6,usr7,usr8,usr9<br>系统中部分文件的权限配置信息如下：<br>    rw-r-x–x    usr1    grp1    …… File1<br>    r—w—x    usr5    grp2    …… File2<br>请问，用户usr1、usr2和usr5可以对文件file1执行什么操作？用户usr6可以对文件file2执行什么操作？<br>可对file1的操作：<br>usr1—属主—读和写；usr2—属组—读和执行；usr5—其余—执行。<br>可对file2的操作：usr6—属组—写。</p><blockquote><p>如果文件是自主访问控制，文件的属主可以修改文件的权限。换句话说，文件的属主可以对文件有任何权限。</p></blockquote><h2 id="和权限相关的进程问题"><a href="#和权限相关的进程问题" class="headerlink" title="和权限相关的进程问题"></a>和权限相关的进程问题</h2><p>如果执行程序权限有s，代表着进程变身，执行程序的时候会变为该权限对应的用户域<br>tips：excute是跳转执行，不会执行excute之后的语句</p><h2 id="访问控制中的特权"><a href="#访问控制中的特权" class="headerlink" title="访问控制中的特权"></a>访问控制中的特权</h2><p>在某种程度上，拥有特权可免受常规访问控制的约束。<br>特权是双刃剑：系统服务之所需，安全威胁之所在。<br>特权分离原则：财务权–出纳权+会计权<br>最小特权原则：杀鸡不要配牛刀<br>特权分离是实现最小特权原则的基础。<br>##文件加密##<br>为什么要加密？<br>文件离开操作系统的控制范围也不泄漏内容。<br>文件加密方法：<br>单个文件加密<br>整个磁盘加密<br>文件系统加密（目录树加密）</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 信息系统安全 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 信息系统安全 </tag>
+            
+            <tag> 信息安全 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>ISS-03系统安全基础&amp;04用户身份认证技术</title>
       <link href="/2022/06/08/ISS-03%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80&amp;04%E7%94%A8%E6%88%B7%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/"/>
       <url>/2022/06/08/ISS-03%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80&amp;04%E7%94%A8%E6%88%B7%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/</url>
