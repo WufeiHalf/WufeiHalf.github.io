@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>Angular学习笔记 --Chap5</title>
+      <link href="/2022/07/11/MaeISxN72jT02Gci/"/>
+      <url>/2022/07/11/MaeISxN72jT02Gci/</url>
+      
+        <content type="html"><![CDATA[<hr><span id="more"></span><h2 id="使用get请求数据"><a href="#使用get请求数据" class="headerlink" title="使用get请求数据"></a>使用get请求数据</h2><p>首先在app.module中引入httpClientModule,然后在imports中声明</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import &#123; httpClientModule &#125; from &#x27;@angular/common/http&#x27;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">imports:[</span><br><span class="line">    HttpClientModule</span><br><span class="line">]</span><br></pre></td></tr></table></figure><p>再在需要使用请求数据的地方引入httpclient与调用</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import &#123; HttpClient &#125; from &#x27;@angular/common/http&#x27;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">constructor(public http:HttpClient)&#123;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">getData()&#123;</span><br><span class="line">    let api = &#x27;xxx&#x27;</span><br><span class="line">    this.http.get(api).subscribe((result)=&gt;&#123;</span><br><span class="line">        console.log(result)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="使用POST提交数据"><a href="#使用POST提交数据" class="headerlink" title="使用POST提交数据"></a>使用POST提交数据</h2><p>大体和GET相同，但是POST需要多引入一个httpheader头文件,因为在进行POST请求的时候需要同时传一个header</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">POSTDATA()&#123;</span><br><span class="line">    let api = &#x27;xxx&#x27;</span><br><span class="line">    const httpOptions = &#123;headers: new HttpHeaders(&#123;&#x27;content-type&#x27;: &#x27;application/json&#x27;&#125;)&#125;</span><br><span class="line">    this.http.post(api,&#123;&quot;username&quot;:&quot;123&quot;,&quot;age&quot;:&quot;12&quot;&#125;,httpOptions).subscribe((response)=&gt;&#123;</span><br><span class="line">        console.log(response)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="使用jsonp获取服务器数据"><a href="#使用jsonp获取服务器数据" class="headerlink" title="使用jsonp获取服务器数据"></a>使用jsonp获取服务器数据</h2><p>如果存在跨域，就使用jsonp来获取服务器数据。</p><p>首先，为什么会存在跨域？比如说域名是localhost，使用的协议是https，端口是5777，访问127.0.0.1:3000的服务器就会产生跨域。如果服务器不支持跨域，那么发出的GET或者POST请求都不可以获取到数据。<strong>只要协议、端口、域名有一个不一样，就属于不同源，那么访问时就可能产生跨域问题。</strong></p><p>这里使用的解决方案是使用jsonp解决跨域问题<br>解决的原理：jsonp相当于是通过callback的xxx方法把服务器的数据传回本地</p><p>如何判断服务器支不支持jsonp？<br>在接口后写个callback = xxx 如果显示出了:xxx 说明支持jsonp</p><ol><li>在app.module里引入 httpClientjsonModule</li><li>如下<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let api = &#x27;xx&#x27;</span><br><span class="line">this.http.jsonp(api,&#x27;callback&#x27;).subscribe((result)=&gt;&#123;</span><br><span class="line">    console.log(result)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li></ol><h2 id="使用axios-第三方-来请求数据"><a href="#使用axios-第三方-来请求数据" class="headerlink" title="使用axios(第三方)来请求数据"></a>使用axios(第三方)来请求数据</h2><p>通过npm安装<br><code>npm install axios --save</code><br><code>import &#123;axios&#125; from &#39;axios&#39;</code><br>使用</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">axiosGet(api)&#123;</span><br><span class="line"></span><br><span class="line">    //异步拿数据</span><br><span class="line">    axios.get(api)</span><br><span class="line">    .then(function (response)  &#123;</span><br><span class="line">        console.log(response)</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 前端 </category>
+          
+          <category> Angular </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 前端 </tag>
+            
+            <tag> Angular </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Angular学习笔记  --Chap4 生命周期函数与异步编程</title>
       <link href="/2022/07/11/XugN5JDCzLhCKw0b/"/>
       <url>/2022/07/11/XugN5JDCzLhCKw0b/</url>
