@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>VUE中key的处理</title>
+      <link href="/2022/09/27/5gPRXWxmruWJqCeQ/"/>
+      <url>/2022/09/27/5gPRXWxmruWJqCeQ/</url>
+      
+        <content type="html"><![CDATA[<hr><span id="more"></span><h2 id="列表中使用key"><a href="#列表中使用key" class="headerlink" title="列表中使用key"></a>列表中使用key</h2><p>key是vue将虚拟dom转化为真实dom的时候会把vue处理掉，所以看不见key</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">    &lt;li v-for=&quot;(p,index) in persons&quot; :key=&quot;index&quot;&gt;</span><br><span class="line">    &#123;&#123;p.name&#125;&#125; -- &#123;&#123;p.age&#125;&#125;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure><p>如果需要在person数组里前面添加一个数据，因为下标发生了改变，会发生数据错乱。</p><h2 id="key的工作原理-和-diff算法"><a href="#key的工作原理-和-diff算法" class="headerlink" title="key的工作原理 和 diff算法"></a>key的工作原理 和 diff算法</h2><p>对于初始数据 {id:’001’,name:’张3’,age:’18’},{id:’002’,name:’张4’,age:’18’},{id:’003’,name:’张5’,age:’18’}<br>vue在拿到后生成了虚拟dom如下:</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;li key=&quot;0&quot;&gt;张3-18 &lt;input type=&quot;text&quot;&gt; &lt;/li&gt;</span><br><span class="line">&lt;li key=&quot;1&quot;&gt;张4-18 &lt;input type=&quot;text&quot;&gt; &lt;/li&gt;</span><br><span class="line">&lt;li key=&quot;2&quot;&gt;张5-18 &lt;input type=&quot;text&quot;&gt; &lt;/li&gt;</span><br></pre></td></tr></table></figure><p>数据添加在数组头的时候，现在的数据是：<br>{id:’004’,name:’张2’,age:’18’}<br>{id:’001’,name:’张3’,age:’18’}<br>{id:’002’,name:’张4’,age:’18’}<br>{id:’003’,name:’张5’,age:’18’}</p><p>生成的新虚拟dom为：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;li key=&quot;0&quot;&gt;张2-18 &lt;input type=&quot;text&quot;&gt; &lt;/li&gt;</span><br><span class="line">&lt;li key=&quot;1&quot;&gt;张3-18 &lt;input type=&quot;text&quot;&gt; &lt;/li&gt;</span><br><span class="line">&lt;li key=&quot;2&quot;&gt;张4-18 &lt;input type=&quot;text&quot;&gt; &lt;/li&gt;</span><br><span class="line">&lt;li key=&quot;3&quot;&gt;张5-18 &lt;input type=&quot;text&quot;&gt; &lt;/li&gt;</span><br></pre></td></tr></table></figure><p>但是vue不会直接将虚拟dom转化成真实dom，vue将新虚拟dom和旧的虚拟dom进行对比，通俗来讲流程是这样的：<br>首先看新的虚拟dom的key=0的一行，发现key为0，回去旧dom判断key=0的是否存在，而这里是存在的；再观察dom里有两个节点，一个文本（张3-18）,一个input框，文本对比张3-18和张2-18，发现发生了改变，于是vue拿新数据覆盖了旧数据； 对比input节点发现一样（因为输入的数据在真实dom里，现在比对的是虚拟dom，在内存中）；<br>对于对比结果不一致的，于是决定不复用；对于对比结果一致的，直接复用。</p><h2 id="key的作用"><a href="#key的作用" class="headerlink" title="key的作用"></a>key的作用</h2><p>key是虚拟dom对象的标识，当状态中的数据发生变化的时候，vue会根据新数据生成新的虚拟dom，随后vue进行新的虚拟dom与旧的虚拟dom的对比，按照规则去和留。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 前端 </category>
+          
+          <category> vue </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 前端 </tag>
+            
+            <tag> vue </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>DOM</title>
       <link href="/2022/07/26/M8GXOdNaXupXHGTA/"/>
       <url>/2022/07/26/M8GXOdNaXupXHGTA/</url>
