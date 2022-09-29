@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>VUE中对数组和对象数据的监测</title>
+      <link href="/2022/09/29/26EmaCGcH3oFju72/"/>
+      <url>/2022/09/29/26EmaCGcH3oFju72/</url>
+      
+        <content type="html"><![CDATA[<hr><span id="more"></span><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>vue会监测data中所有层次的数据,通过setter监视，并且在创建vue实例的时候就传入监测的数据。<br>vue通过object.defineproperty方法中的get和set，对数据进行修改和解析.<br>vue封装一个observer方法,遍历了data中全部的属性,并对属性添加getter和setter进行数据监控.</p><h2 id="监测对象"><a href="#监测对象" class="headerlink" title="监测对象"></a>监测对象</h2><p>在js中有两种方法可以监测到对象的变化Object.defineProperty和ES6的Proxy,vue2.0采用Object.defineProperty来监测对象数据的变化。根据vue的使用特性，我们要监测对象的所有key值，并且对新增的数据也要监测。<br>对于对象数据的类型处理，我们使用递归（Vue中也是采用递归的方法处理对象）来监测对象的每一个属性，同时，我们可能给对象属性赋的新值也可能是个对象，由于Object.defineProperty只能监测对象已声明的属性，对于新的对象，我们也要再次调用observer(newValue)。同时，vue无法监测obj在定义时，没有声明的而后来新增的属性如name，或者是delete this.obj.name这个变化，也就不会更新视图</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function Observer(obj) &#123;</span><br><span class="line">           if (typeof obj !== &#x27;object&#x27; || obj == null) &#123;</span><br><span class="line">               return obj;</span><br><span class="line">           &#125;</span><br><span class="line">           // 汇总对象中所有的属性形成一个数组</span><br><span class="line">           const keys = Object.keys(obj); // Object.keys() 方法会返回一个由一个给定对象的自身可枚举属性组成的数组，数组中属性名的排列顺序和正常循环遍历该对象时返回的顺序一致</span><br><span class="line">           // 遍历</span><br><span class="line">           keys.forEach((k) =&gt; &#123;</span><br><span class="line">               defineReactive(obj, k, obj[k]);</span><br><span class="line">           &#125;);</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>vue会监视data中所有层次的数据</p><p>如何监测对象中的数据</p><p>通过setter实现监视，且要在new Vue时就传入要监测的数据</p><p>对象中后追加的属性，Vue默认不做响应式处理</p><p>如需给后添加的属性做响应式，请使用如下API：</p><p>Vue.set(target，propertyName/index，value) 或 vm.$set(target，propertyName/index，value)</p><p>如何监测数组中的数据</p><p>通过包裹数组更新元素的方法实现，本质就是做了两件事：<br>调用原生对应的方法对数组进行更新<br>重新解析模板，进而更新页面。<br>在Vue修改数组中的某个元素一定要用如下方法：</p><p>使用这些API：push()、pop()、shift()、unshift()、splice()、sort()、reverse()<br>Vue.set() 或 vm.$set()<br>特别注意：Vue.set() 和 vm.$set() 不能给vm 或 vm的根数据对象 添加属性！！！</p><p>注意：在同一个页面中，两个（或以上）v-for并列存在，并且序列号都使用的是index代号，会导致冲突。</p><p>解决办法： 分别写不同的序列下标，比如 i j ，或者加前后缀如 ‘i’等</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> vue </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 前端 </tag>
+            
+            <tag> vue </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>VUE中key的处理</title>
       <link href="/2022/09/27/5gPRXWxmruWJqCeQ/"/>
       <url>/2022/09/27/5gPRXWxmruWJqCeQ/</url>
