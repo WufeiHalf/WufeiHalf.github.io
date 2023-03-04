@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>vue中组件通讯(自定义事件)</title>
+      <link href="/2023/03/04/wWicEMeIsFCgzmqu/"/>
+      <url>/2023/03/04/wWicEMeIsFCgzmqu/</url>
+      
+        <content type="html"><![CDATA[<hr><span id="more"></span><h2 id="子组件给父组件传值"><a href="#子组件给父组件传值" class="headerlink" title="子组件给父组件传值"></a>子组件给父组件传值</h2><p>除了上篇提到的方法，还可以使用自定义事件的方法实现子组件和父组件的数据交互。<br>在父组件里使用子组件的时候绑定一个v-on 例如下图</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">//App.vue</span><br><span class="line">&lt;student v-on:sendMessage=&quot;demo&quot; /&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">demo()&#123;</span><br><span class="line">    console.log(&#x27;demo被调用了&#x27;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// student.vue</span><br><span class="line">&lt;button :click=&quot;sendStudentName&quot;&gt;点击&lt;/button&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sendStudentName()&#123;</span><br><span class="line">    this.$emit(&#x27;sendMessage&#x27;)</span><br><span class="line">    //打印出了上面的console.log</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>这样使用，不需要声明props</p><p>还可以使用ref来代替v-on</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//App.vue</span><br><span class="line">&lt;student ref=&quot;student&quot; /&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">demo()&#123;</span><br><span class="line">    console.log(&#x27;demo被调用了&#x27;)</span><br><span class="line">&#125;</span><br><span class="line">mounted()&#123;</span><br><span class="line">    this.$ref.student.$on(&#x27;sendMessage&#x27;,this.demo)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// student.vue</span><br><span class="line">&lt;button :click=&quot;sendStudentName&quot;&gt;点击&lt;/button&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sendStudentName()&#123;</span><br><span class="line">    this.$emit(&#x27;sendMessage&#x27;)</span><br><span class="line">    //打印出了上面的console.log</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="绑定后的解绑"><a href="#绑定后的解绑" class="headerlink" title="绑定后的解绑"></a>绑定后的解绑</h2><p>在被调用的子组件里使用<code>this.$off(&#39;eventName&#39;)</code>解绑对应事件<br>解绑多个事件 可以把多个事件放进数组里，一起解绑<br><code>this.$off()</code> 全部解绑</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>vue的props，mixin和插件</title>
       <link href="/2023/03/03/H8GOknb5eAWff1Js/"/>
       <url>/2023/03/03/H8GOknb5eAWff1Js/</url>
